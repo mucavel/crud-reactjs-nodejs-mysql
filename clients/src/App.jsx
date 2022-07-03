@@ -24,7 +24,7 @@ function App() {
         animeReview : animeReview
   
       }).then(async ()=>{
-        return alert('Sucess!')
+        return alert('Review enviado com sucesso!')
       })
       window.location.reload(true)
   }

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
+const path = require('path')
 
 const db = mysql.createPool({
     host: "127.0.0.1",
@@ -11,9 +12,16 @@ const db = mysql.createPool({
     database: "CRUD_React"
 })
 
+
+app.use(express.static(path.join(__dirname + "/public")))
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(cors())
+
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+    console.log(`server runnig on port ${PORT}`)
+})
 
 app.get('/get', (req, res) => {
     const getQuery = "SELECT * FROM `animes`";
@@ -49,7 +57,4 @@ app.put('/update', (req, res) => {
     db.query(updateQuery, [review, anime], (err, result) => {
         if(err) console.log(err)
     })
-})
-app.listen(3001, () => {
-    console.log('server running!!')
 })
